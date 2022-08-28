@@ -1,3 +1,4 @@
+{{ attach_library('arlo/arlo-events-2') }}
 <script language="Javascript">
   document.addEventListener("arlojscontrolsloaded", function() {
     var platformID = "{{ platform_id }}";
@@ -6,14 +7,17 @@
       moduleType: "UpcomingEvents",
       targetElement: "#upcoming-events-list1",
       template: "#upcoming-events-list1-template",
-      maxCount: 5,
+      maxCount: "{{ max_count }}",
       includeLoadMoreButton: {{ show_load_more }},
       loadMoreButtonText: "{{ load_more_text }}",
       callbacks: {
         onShow: eventListOnShow
       },
       filter: {
-        locname: ["Online"]
+        {% if locations is not empty %}locname: ["{% for location in locations %}{{ location|trim }}","{% endfor %}"],{% endif %}
+        {% if tag is not empty %}tag: "{{ tag }}",{% endif %}
+        {% if event_ids is not empty %}eventID: [{% for event_id in event_ids %}{{ event_id|trim }},{% endfor %}],{% endif %}
+        {% if templatecategoryid is not empty %}templatecategoryid: "{{ template_category_id }}"{% endif %}
       }
     };
 

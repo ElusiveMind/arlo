@@ -1,13 +1,13 @@
-arlo.general:
-  title: "Arlo"
-  description: "General settings for Arlo Web Controls integration."
-  route_name: arlo.general
-  menu_name: tweearlo_feed.general
-  parent: system.admin_structure
+# arlo.general:
+#   title: "Arlo"
+#   description: "General settings for Arlo Web Controls integration."
+#   route_name: arlo.general
+#   menu_name: tweearlo_feed.general
+#   parent: system.admin_structure
 
-arlo.settings:
-  title: "Settings"
-  route_name: arlo.settings
-  description: "Configure Arlo Web Controls settings."
-  parent: arlo.general
-  weight: 0
+# arlo.settings:
+#   title: "Settings"
+#   route_name: arlo.settings
+#   description: "Configure Arlo Web Controls settings."
+#   parent: arlo.general
+#   weight: 0

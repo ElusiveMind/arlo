@@ -1,0 +1,148 @@
+<script src="//code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+{{ attach_library('arlo/arlo-events-6') }}
+<script language="Javascript">
+  (function($, ElementQueries) {
+    document.addEventListener("arlojscontrolsloaded", function() {
+    var platformID = "{{ platform_id }}"
+
+    var eventList = {
+      moduleType: "UpcomingEvents",
+      targetElement: "#upcoming-events",
+      template: "#upcoming-events-template",
+      maxCount: {{ max_count }},
+      includeLoadMoreButton: {{ show_load_more }},
+      loadMoreButtonText: "{{ load_more_text }}",
+      includeArloLink: false,
+      smartDateFormats: {
+          startDay: "DD"
+      },
+      filter: {
+        {% if locations is not empty %}locname: ["{% for location in locations %}{{ location|trim }}","{% endfor %}"],{% endif %}
+        {% if tag is not empty %}tag: "{{ tag }}",{% endif %}
+        {% if event_ids is not empty %}eventID: [{% for event_id in event_ids %}{{ event_id|trim }},{% endfor %}],{% endif %}
+        {% if templatecategoryid is not empty %}templatecategoryid: "{{ template_category_id }}"{% endif %}
+      }
+    };
+
+    var app = new window.ArloWebControls();
+
+    app.start({
+      platformID: platformID,
+      showDevErrors: {{ dev_mode }},
+      modules: [eventList]
+    });
+
+    /* ----- Callback function ----- */
+
+    // "OnShow" callback
+    function eventListOnShowCallback(getEventListItemsFunction) {
+    var listItems = getEventListItemsFunction();
+
+    var cardSummary = $('.arlo-summary');
+    var strMaxLength = 350;
+    
+    $.each(cardSummary, function (index, ele) {
+        var str = $(ele).text()
+        $(ele).text(strChopper(str));
+    });
+
+    function strChopper(str) {
+      if (str.length > strMaxLength) {
+        str = str.substring(0, strMaxLength) + '...';
+      }
+      return str;
+    }
+    
+    ElementQueries.init();
+
+    // Hide timezone selector if there are no online events
+    if ($(".arlo-online").length < 1) {
+      $(".arlo-timezone-select").hide();
+    } else {
+      $(".arlo-timezone-select").show();
+      $(".arlo-timezone-select").parent().css("float", "right");
+    }
+
+    // Set up tooltips
+    $.each(listItems, function(index, listItem) {
+      var tooltipElement = $(listItem).find('[data-toggle="tooltip"]')[0];
+      if (tooltipElement) {
+        var toolTipContent = $(listItem).find(".tooltipcontent")[0];
+        if (toolTipContent) {
+          $(tooltipElement).attr(
+            "data-original-title",
+            $(toolTipContent).html()
+          );
+          $(tooltipElement).tooltip();
+        }
+      }
+    });
+    }
+
+    $("#arlo-filter-toggle").click(function() {
+      $(this).parent().toggleClass("arlo-show-filter");
+    });
+    });
+  })(jQuery, window.ElementQueries);
+</script>
+
+<!-- Target Elements -->
+<div class="arlo">
+
+<div id="upcoming-events"></div>
+</div>
+
+<!-- Templates -->
+
+
+<script type='text/template' id='upcoming-events-template'>
+    <% if (typeof(Location.IsOnline) !== "undefined" && Location.IsOnline === true && (typeof(Location.Name) !== "undefined" && Location.Name !== "")) { %>
+        <div class="arlo-event-card arlo-online-card">
+    <% } else { %>
+        <div class="arlo-event-card">
+    <% } %>
+
+        <div class="arlo-event-card-front">
+        
+        <div class="arlo-date">
+            <div class="arlo-date-container arlo-text-color-contrast">
+            <div class="arlo-start-date">
+                <%= SmartDateFields.startDay %>
+            </div>
+            <div class="arlo-start-month">
+                <%= SmartDateFields.startMonth %>
+            </div>
+            </div>
+        </div>
+        
+        <div class="arlo-event-image" style="background-image: url(<%= ListImageUri %>)"></div>
+
+        <div class="arlo-detail">
+            <% if (typeof(Provider.Name) !== "undefined" && Provider.Name !== "") { %>
+            <div class="arlo-provider-name">
+                Provided by <%= Provider.Name %>
+            </div>
+            <% }%>
+            
+            <div class="arlo-name arlo-text-color-contrast">
+            <%- Name %>
+            </div>
+
+            <div class="arlo-location arlo-text-color-contrast">
+            <%- Location.Name %>
+            </div>
+        </div>
+
+        </div>
+
+        <div class="arlo-event-card-back">
+
+            <div class="arlo-summary arlo-text-color-contrast">
+                <%- Summary %>
+            </div>
+
+            <%= formatRegistrationInfo('link') %>
+        </div>        
+    </div>
+
+</script>

@@ -190,14 +190,17 @@ class ArloUpcomingEventsBlock extends BlockBase {
   public function build() {
     // Retrieve existing configuration for this block.
     $block_config = $this->getConfiguration();
+
+    $locations = explode(',', $block_config['locations']);
+    $event_ids = explode(',', $block_config['event_ids']);
     return [
-      '#theme' => 'arlo_events_template_' . $block_config['template_id'],
+      '#theme' => 'arlo_events_' . $block_config['template_id'],
       '#platform_id' => $block_config['platform_id'],
       '#max_count' => $block_config['max_count'],
       '#show_load_more' => $block_config['show_load_more'],
       '#load_more_text' => $block_config['load_more_text'],
-      '#event_ids' => $block_config['event_ids'],
-      '#locations' => $block_config['locations'],
+      '#event_ids' => $event_ids,
+      '#locations' => $locations,
       '#template_category_id' => $block_config['template_category_id'],
       '#tag' => $block_config['tag'],
       '#dev_mode' => $block_config['dev_mode'],

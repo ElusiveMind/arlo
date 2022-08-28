@@ -27,7 +27,7 @@ function arlo_help($route_name, RouteMatchInterface $route_match) {
  */
 function arlo_theme($existing, $type, $theme, $path) {
   for ($i = 1; $i <= 6; $i++) {
-    $data['arlo_events_template_' . $i]['variables'] = [
+    $data['arlo_events_' . $i]['variables'] = [
       'platform_id' => NULL,
       'filters' => [],
       'show_load_more' => NULL,
@@ -38,8 +38,35 @@ function arlo_theme($existing, $type, $theme, $path) {
       'template_category_id' => NULL,
       'event_ids' => NULL,
       'template_id' => NULL,
+      'max_count' => NULL,
     ];
-    $data['arlo_events_template_' . $i]['template'] = 'arlo-upcoming-events-template_' . $i;
+    $data['arlo_events_' . $i]['template'] = 'arlo-events-' . $i;
+  }
+
+  /**
+   * Pull in any templates configured in custom hooks.
+   */
+  $options = [];
+  $hook = 'custom_event_templates';
+  \Drupal::moduleHandler()->invokeAllWith($hook, function (callable $hook, string $module) use (&$options) {
+    $options = $hook();
+  });
+
+  foreach ($options as $key => $result) {
+    $data['arlo_events_' . $key]['variables'] = [
+      'platform_id' => NULL,
+      'filters' => [],
+      'show_load_more' => NULL,
+      'load_more_text' => NULL,
+      'dev_mode' => NULL,
+      'locations' => NULL,
+      'tag' => NULL,
+      'template_category_id' => NULL,
+      'event_ids' => NULL,
+      'template_id' => NULL,
+      'max_count' => NULL,
+    ];
+    $data['arlo_events_' . $key]['template'] = 'arlo-events-' . $key;
   }
   return $data;
 }
@@ -48,9 +75,7 @@ function arlo_theme($existing, $type, $theme, $path) {
  * Implements hook_page_attachments().
  */
 function arlo_page_attachments(&$variables) {
-  dsm($variables);
   $variables['#attached']['library'][] = 'arlo/arlo';
-  $variables['#attached']['library'][] = 'arlo/upcoming-event-template-1';
 }
 
 /**
