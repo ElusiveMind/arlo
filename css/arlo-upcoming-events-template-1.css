@@ -1,0 +1,378 @@
+body{
+  font-family: 'Source Sans Pro', Arial, Tahoma, sans-serif;
+}
+
+ol, ul, li {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.arlo-page-title {
+  text-align: center;
+}
+
+.arlo-page-title p {
+  font-size: 14px;
+  max-width: 500px;
+  margin: 0 auto 20px auto;
+}
+
+.arlo-page-title h2 {
+  font-size: 34px;
+  margin-bottom: 30px;
+  font-weight: 400;
+}
+
+.section-header{
+  clear: both;
+  font-size: 26px;
+  margin: 20px 0;
+}
+
+/****** Loader ******/
+
+.arlo .arlo-loading-overlay {
+position: fixed;
+z-index: 999;
+height: 2em;
+width: 2em;
+overflow: show;
+margin: auto;
+bottom: 50%;
+top: 50%;
+left: 50%;
+right: 50%;
+}
+
+.arlo .arlo-loading-overlay:before {
+content: '';
+display: block;
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-color: rgba(255, 255, 255, 0.3);
+}
+
+.arlo .arlo-loading-overlay:not(:required) {
+/* hide "loading..." text */
+font: 0/0 a;
+color: transparent;
+text-shadow: none;
+background-color: transparent;
+border: 0;
+}
+
+.arlo .arlo-loading-overlay:not(:required):after {
+content: '';
+display: block;
+font-size: 10px;
+width: 1em;
+height: 1em;
+margin-top: -0.5em;  
+-webkit-animation: spinner 1500ms infinite linear;
+animation: spinner 1500ms infinite linear;
+border-radius: 0.5em;
+box-shadow: rgba(0, 0, 0, 0.30) 1.5em 0 0 0, rgba(0, 0, 0, 0.30) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.30) 0 1.5em 0 0, rgba(0, 0, 0, 0.30) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.30) -1.5em 0 0 0, rgba(0, 0, 0, 0.30) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.30) 0 -1.5em 0 0, rgba(0, 0, 0, 0.30) 1.1em -1.1em 0 0;
+}
+
+@-webkit-keyframes spinner {
+0% {
+  -webkit-transform: rotate(0deg);
+  transform: rotate(0deg);
+}
+100% {
+  -webkit-transform: rotate(360deg);
+  transform: rotate(360deg);
+}
+}
+
+@keyframes spinner {
+0% {
+  -webkit-transform: rotate(0deg);
+  transform: rotate(0deg);
+}
+100% {
+  -webkit-transform: rotate(360deg);
+  transform: rotate(360deg);
+}
+}
+
+.arlo html {
+font-family: sans-serif;
+/* 1 */
+-ms-text-size-adjust: 100%;
+/* 2 */
+-webkit-text-size-adjust: 100%;
+/* 2 */
+}
+
+#upcoming-events-list1 {
+  display: table;
+  width: 100%;
+}
+
+#upcoming-events-list1 .arlo-event-list {
+  border-collapse: separate;
+  border-spacing: 0 10px;
+  list-style: none;
+      display: block;
+}
+
+#upcoming-events-list1 a {
+  color: #EB4E31;
+  text-decoration: none;
+}
+
+#upcoming-events-list1 a:hover {
+  text-decoration: underline;
+}
+
+
+
+.arlo[max-width~="1000px"] #upcoming-events-list1 .middle {
+  display: block;
+}
+
+.arlo[max-width~="1000px"] #upcoming-events-list1 .right {
+  height: auto;
+  display: block;
+  width: auto;
+  overflow: auto;
+}
+
+
+.arlo[max-width~="1000px"] #upcoming-events-list1 .offers,
+.arlo[max-width~="1000px"] #upcoming-events-list1 .duration {
+  float: left;
+}
+
+.arlo[max-width~="1000px"] #upcoming-events-list1 .registration {
+  float: right;
+}
+
+.arlo[max-width~="1000px"] #upcoming-events-list1 .arlo-event-register {
+  margin-top: 0;
+}
+
+.arlo[max-width~="1000px"] #upcoming-events-list1 .offers {
+  clear: both;
+}
+
+.arlo[max-width~="630px"] #upcoming-events-list1 .arlo-event-listitem {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.arlo[max-width~="630px"] #upcoming-events-list1 .left {
+  display: block;
+  width: auto;
+  height: auto;
+  overflow: auto;
+}
+
+.arlo[max-width~="630px"] #upcoming-events-list1 .left > div {
+  float: left;
+  margin-right: 10px;
+  margin-bottom: 0;
+}
+
+.arlo[max-width~="630px"] #upcoming-events-list1 .left .location {
+  float: right;
+}
+
+#upcoming-events-list1 .arlo-event-list .left[max-width~="465px"] .time {
+  clear: left;
+}
+
+#upcoming-events-list1 .arlo-event-list .left[max-width~="315px"] .location {
+  clear: both;
+  float: left;
+}
+
+#upcoming-events-list1 .arlo-event-list .right[max-width~="415px"] .offers {
+  clear: both;
+  float: left;
+  margin-top: 10px;
+}
+
+#upcoming-events-list1 .arlo-event-list .right[max-width~="415px"] .registration {
+  clear: both;
+}
+
+.arlo[max-width~="465px"] #upcoming-events-list1 .offers {
+  float: right;
+  clear: none;
+  margin-top: 0;
+}
+
+.arlo[max-width~="465px"] #upcoming-events-list1 .registration {
+  float: none;
+  clear: both;
+  padding-top: 15px;
+  text-align: center;
+}
+
+.arlo[max-width~="465px"] #upcoming-events-list1 .registration .arlo-event-register,
+.arlo[max-width~="465px"] #upcoming-events-list1 .arlo-show-more {
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 7px;
+}
+
+#upcoming-events-list1 .arlo-event-listitem {
+  display: table-row;
+}
+
+#upcoming-events-list1 .arlo-original-price{
+  text-decoration: line-through;
+}
+
+#upcoming-events-list1 .left {
+  width: 180px;
+  height: 25px;
+  padding: 20px;
+  list-style: none;
+  font-family: 'Open Sans', sans-serif;
+  display: table-cell;
+  vertical-align: top;
+  color: antiquewhite;
+  background-color: #EB4E31;
+}
+
+#upcoming-events-list1 .middle {
+  width: auto;
+  display: table-cell;
+  vertical-align: top;
+  padding: 22px 28px;
+  background-color: #F3F3F3;
+}
+
+#upcoming-events-list1 .right {
+  width: 275px;
+  height: 25px;
+  display: table-cell;
+  vertical-align: top;
+  padding: 20px;
+  background-color: #E9E9E9;
+  color: #9A9A9A;
+}
+
+#upcoming-events-list1 .right .arlo-offer-taxrate,
+#upcoming-events-list1 .right .arlo-offer-taxrate-shortname {
+  display: none;
+}
+
+#upcoming-events-list1 li.arlo-offer-li {
+  margin-bottom: 4px;
+}
+
+#upcoming-events-list1 span.arlo-offer-amount {
+  color: #0c0c0c;
+}
+
+#upcoming-events-list1 .arlo-pricing-table span.arlo-offer-amount {
+  float: right;
+}
+
+#upcoming-events-list1 .arlo-discount-offer span.arlo-offer-amount {
+  float: right;
+  padding-left: 10px;
+}
+
+#upcoming-events-list1 .arlo-discount-offer span.arlo-offer-label {
+  display: inline-block;
+}
+
+
+#upcoming-events-list1 h3 {
+  line-height: 34px;
+  margin-bottom: 11px;
+  margin: 0 0 12px;
+  font-size: 26px;
+  color: #EB4E31;
+  line-height: 1.1;
+}
+
+#upcoming-events-list1 .right .label {
+  margin-right: 4px;
+}
+
+#upcoming-events-list1 .right .content {
+  color: #0c0c0c;
+}
+
+#upcoming-events-list1 .offers {
+  margin-top: 11px;
+}
+
+#upcoming-events-list1 .offers ul {
+  list-style: none;
+  padding: 0;
+}
+
+#upcoming-events-list1 .duration .content,
+#upcoming-events-list1 .duration .label {
+  color: #9e9e9e;
+}
+
+#upcoming-events-list1 .arlo-show-more-container {
+  text-align: center;
+
+}
+
+#upcoming-events-list1 .arlo-event-register,
+#upcoming-events-list1 .arlo-show-more {
+  font-size: 17px;
+  color: antiquewhite;
+  background-color: #EB4E31;
+  text-align: center;
+  display: inline-block;
+  line-height: 20px;
+  border-radius: 2px;
+  text-decoration: none;
+  padding: 8px 25px;
+  margin-top: 19px;
+  margin-right: 6px;
+  cursor: pointer;
+}
+
+
+#upcoming-events-list1 .arlo-event-register:hover,
+#upcoming-events-list1 .arlo-show-more:hover {
+  background: #f36f59;
+  color: #fff8ef;
+  text-decoration: none;
+}
+
+#upcoming-events-list1 .arlo-event-register.arlo-waiting-list {
+  background: #b5b5b5;
+  color: whitesmoke;
+}
+
+#upcoming-events-list1 .arlo-event-register.arlo-waiting-list:hover {
+  background: #c5c5c5;
+  color: #fbfbfb;
+}
+
+#upcoming-events-list1 .arlo-event-register-info a {
+  font-size: inherit !important;
+}
+
+#upcoming-events-list1 .summary, #upcoming-events-list1 .presenterlabel {
+  color: #9A9A9A;
+  margin-bottom: 5px;
+}
+
+#upcoming-events-list1 .date {
+  font-weight: 600;
+}
+
+#upcoming-events-list1 .location,
+#upcoming-events-list1 .time,
+#upcoming-events-list1 .date {
+  margin-bottom: 7px;
+  text-transform: uppercase;
+}

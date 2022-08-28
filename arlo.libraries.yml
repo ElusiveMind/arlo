@@ -1,0 +1,37 @@
+arlo:
+  version: 1.x
+  js:
+    //packages.arlocdn.net/jscontrols/1.0/resources/resizesensor.js: { type: external }
+    //packages.arlocdn.net/jscontrols/1.0/resources/elementqueries.js: { type: external }
+    //connect.arlocdn.net/jscontrols/1.1/init.js: { type: external, attributes: { defer: true } }
+
+upcoming-event-template-1:
+  version: 1.x
+  css:
+    theme:
+      css/arlo-upcoming-events-template-1.css: {}
+upcoming-event-template-2:
+  version: 1.x
+  css:
+    theme:
+      css/arlo-upcoming-events-template-2.css: {}
+upcoming-event-template-3:
+  version: 1.x
+  css:
+    theme:
+      css/arlo-upcoming-events-template-3.css: {}
+upcoming-event-template-4:
+  version: 1.x
+  css:
+    theme:
+      css/arlo-upcoming-events-template-4.css: {}  
+upcoming-event-template-5:
+  version: 1.x
+  css:
+    theme:
+      css/arlo-upcoming-events-template-5.css: {}
+upcoming-event-template-6:
+  version: 1.x
+  css:
+    theme:
+      css/arlo-upcoming-events-template-6.css: {}

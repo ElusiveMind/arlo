@@ -1,0 +1,103 @@
+<script language="Javascript">
+  document.addEventListener("arlojscontrolsloaded", function() {
+    var platformID = "{{ platform_id }}";
+
+    var eventList1 = {
+      moduleType: "UpcomingEvents",
+      targetElement: "#upcoming-events-list1",
+      template: "#upcoming-events-list1-template",
+      maxCount: 5,
+      includeLoadMoreButton: {{ show_load_more }},
+      loadMoreButtonText: "{{ load_more_text }}",
+      callbacks: {
+        onShow: eventListOnShow
+      },
+      filter: {
+        locname: ["Online"]
+      }
+    };
+
+    function eventListOnShow(getEventListItemsFunction, $) {
+      ElementQueries.init();
+
+      var listItems = $(getEventListItemsFunction());
+      listItems.each(function(i, li) {
+        var offerItems = $(li).find('.arlo-offer-li, .arlo-offer-container').not(".arlo-discount-offer").not(":only-child");
+        offerItems.prepend('<span class="arlo-offer-label">Standard</span>');
+        offerItems.addClass('arlo-pricing-table');
+      });
+    }
+
+    var app = new window.ArloWebControls();
+
+    app.start({
+      "platformID": platformID,
+      "showDevErrors": {{ dev_mode }},
+      "modules": [eventList1]
+    });
+  });
+</script>
+
+<div class="arlo">
+  <div class="arlo-page-title arlo-font-primary">
+    <h2>Demos - Upcoming Events - List 1</h2>
+  </div>
+  <div id="upcoming-events-list1"></div>
+</div>
+
+<!-- Templates -->
+<script type='text/template' id='upcoming-events-list1-template'>
+  <div class="left">
+    <div class="date">
+      <%= formatDate(StartDateTime, "ddd, DD MMM YYYY") %>
+    </div>
+    <div class="time">
+      <%= formatDate(StartDateTime, "LT") %> -
+        <%= formatDate(EndDateTime, "LT") %>
+    </div>
+    <div class="location">
+      <% if (typeof(Location.IsOnline) !== "undefined" && Location.IsOnline === true && (typeof(Location.Name) !== "undefined" && Location.Name !== "")) { %>
+        Online
+        <% } else { %>
+          <%=  Location.Name %>
+            <% }  %>
+    </div>
+  </div>
+
+  <div class="middle">
+    <h3><%- Name %></h3>
+    <div class="summary">
+      <%- Summary %>
+    </div>
+    <% if (Presenters.length > 0) {  %>
+      <div class="presenters">
+        <span class="presenterlabel">Presented By </span>
+        <span class="presenter">
+          <%= formatCollection(Presenters, "csv", true) %>
+        </span>
+      </div>
+      <% }  %>
+  </div>
+
+  <div class="right">
+    <div class="duration">
+      <span class="label"><i class="fa fa-clock-o" aria-hidden="true"></i></span><span class="content"><%- Duration %></span>
+    </div>
+    <div class="offers">
+      <%= formatAdvertisedOffers({
+        showPriceWithTaxInclusive: false,
+        showSingleOffer: false,
+        showLabel: true,
+        showCurrencyCode: false,
+        showMessage: true,
+        showTaxRate: true
+        }) %>
+    </div>
+
+    <div class="registration">
+      <%= formatRegistrationInfo("link") %>
+        <% if (typeof( RegistrationInfo.RegisterUri ) !== "undefined" && RegistrationInfo.RegisterUri !== "") { %> or <a href="<%- ViewUri %>" target="_blank">read more</a>
+          <% } %>
+    </div>
+  </div>
+</script>

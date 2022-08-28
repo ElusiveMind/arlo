@@ -1,0 +1,5 @@
+name: 'Arlo'
+type: module
+description: 'Module for integrating Drupal with Arlo Web Controls.'
+core_version_requirement: ^9.4 || ^10
+package: Other

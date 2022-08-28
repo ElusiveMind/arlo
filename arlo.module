@@ -1,0 +1,63 @@
+<?php
+
+/**
+ * @file
+ * Contains arlo.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function arlo_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the arlo module.
+    case 'help.page.arlo':
+      $output = '<h4>' . t('Overview') . '</h4>';
+      return $output;
+      break;
+    default:
+      break;
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function arlo_theme($existing, $type, $theme, $path) {
+  for ($i = 1; $i <= 6; $i++) {
+    $data['arlo_events_template_' . $i]['variables'] = [
+      'platform_id' => NULL,
+      'filters' => [],
+      'show_load_more' => NULL,
+      'load_more_text' => NULL,
+      'dev_mode' => NULL,
+      'locations' => NULL,
+      'tag' => NULL,
+      'template_category_id' => NULL,
+      'event_ids' => NULL,
+      'template_id' => NULL,
+    ];
+    $data['arlo_events_template_' . $i]['template'] = 'arlo-upcoming-events-template_' . $i;
+  }
+  return $data;
+}
+
+/**
+ * Implements hook_page_attachments().
+ */
+function arlo_page_attachments(&$variables) {
+  dsm($variables);
+  $variables['#attached']['library'][] = 'arlo/arlo';
+  $variables['#attached']['library'][] = 'arlo/upcoming-event-template-1';
+}
+
+/**
+ * Implements hook_custom_event_templates().
+ */
+function arlo_custom_event_templates() {
+  return [
+    'test_machine_name' => 'Test Machine Name',
+  ];
+}
