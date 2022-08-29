@@ -1,0 +1,51 @@
+<script src="//code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+{{ attach_library('arlo/arlo-search') }}
+{{ attach_library('arlo/arlo-search-2') }}
+<script language = "Javascript">
+(function () {
+    document.addEventListener("arlojscontrolsloaded", function () {
+        var platformID = "{{ platform_id }}";
+
+        var instantSearch = {
+            moduleType: "Search",
+            targetElement: '#arlo-search',
+            customUrls: {
+                searchResults: "searchresults.html",
+                eventtemplate: "http://theme1.demo.arlo.co/event-template/"
+            },
+            queryStringConfig: ["search"],
+            searchControlID: 1,
+            autoUpdateResults: true,
+            submitButtonHtml: '<i class="fa fa-search" aria-hidden="true"></i>',
+            searchBoxTarget: '#arlo-search-box',
+            searchResultsTarget: "#arlo-search-results",
+            maxCount: 5,
+            maxNextRunningEvents: 5,
+            includeLoadMoreButton: false,
+            loadMoreButtonText: "Show More",
+            nextRunningEventTemplate: '<a href="<%- ViewUri %>" ><%= formatDate(StartDateTime, "D MMM") %> <span><%= Location.Name %></span></a>',
+            callbacks: {
+                onShow: function() {
+                    ElementQueries.init(); //jshint ignore:line
+                }
+            },
+            noResultsText: '<div class="arlo-no-results">No items match this search</div>',
+            targetSearchControlID: 2,
+            includeArloLink: false
+        };
+
+        new window.ArloWebControls().start({
+            "platformID": platformID,
+            "showDevErrors": true,
+            "modules": [instantSearch]
+        });
+    });
+
+})();
+</script>
+
+<!-- Target Elements -->
+<div class="arlo">
+    <div id="arlo-search-box"></div>
+    <div id="arlo-search-results"></div>
+</div>

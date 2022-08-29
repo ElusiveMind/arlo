@@ -1,0 +1,15 @@
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+{{ attach_library('arlo/arlo-calendar') }}
+<script language = "Javascript">
+document.addEventListener("arlocalendarcontrolloaded", function() {
+  var calendar = new LS.CalendarControl({
+    platformID: "{{ platform_id }}",
+    renderTo: "#calendar",
+  }).init();				
+});
+</script>
+
+<div class="container">
+  <div id="calendar" ></div>
+</div>
+

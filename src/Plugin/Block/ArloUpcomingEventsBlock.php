@@ -21,6 +21,7 @@ class ArloUpcomingEventsBlock extends BlockBase {
    */
   public function defaultConfiguration() {
     return [
+      'platform_id' => NULL,
       'max_count' => 5,
       'slow_load_more' => 'true',
       'load_more_text' => $this->t('Show More'),
@@ -190,9 +191,14 @@ class ArloUpcomingEventsBlock extends BlockBase {
   public function build() {
     // Retrieve existing configuration for this block.
     $block_config = $this->getConfiguration();
+    $locations = $event_ids = NULL;
 
-    $locations = explode(',', $block_config['locations']);
-    $event_ids = explode(',', $block_config['event_ids']);
+    if (!empty($block_config['locations'])) {
+      $locations = explode(',', $block_config['locations']);
+    }
+    if (!empty($block_config['event_ids'])) {
+      $event_ids = explode(',', $block_config['event_ids']);
+    }
     return [
       '#theme' => 'arlo_events_' . $block_config['template_id'],
       '#platform_id' => $block_config['platform_id'],

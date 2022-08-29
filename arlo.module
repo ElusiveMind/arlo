@@ -26,10 +26,30 @@ function arlo_help($route_name, RouteMatchInterface $route_match) {
  * Implements hook_theme().
  */
 function arlo_theme($existing, $type, $theme, $path) {
+  $data['arlo_calendar'] = [
+    'variables' => [
+      'platform_id' => NULL,
+    ],
+    'template' => 'arlo-calendar'
+  ];
+
+  $data['arlo_search_1'] = [
+    'variables' => [
+      'platform_id' => NULL,
+    ],
+    'template' => 'arlo-search-1'
+  ];
+
+  $data['arlo_search_2'] = [
+    'variables' => [
+      'platform_id' => NULL,
+    ],
+    'template' => 'arlo-search-2'
+  ];
+  
   for ($i = 1; $i <= 6; $i++) {
     $data['arlo_events_' . $i]['variables'] = [
       'platform_id' => NULL,
-      'filters' => [],
       'show_load_more' => NULL,
       'load_more_text' => NULL,
       'dev_mode' => NULL,
@@ -55,7 +75,6 @@ function arlo_theme($existing, $type, $theme, $path) {
   foreach ($options as $key => $result) {
     $data['arlo_events_' . $key]['variables'] = [
       'platform_id' => NULL,
-      'filters' => [],
       'show_load_more' => NULL,
       'load_more_text' => NULL,
       'dev_mode' => NULL,
@@ -75,14 +94,14 @@ function arlo_theme($existing, $type, $theme, $path) {
  * Implements hook_page_attachments().
  */
 function arlo_page_attachments(&$variables) {
-  $variables['#attached']['library'][] = 'arlo/arlo';
+  $variables['#attached']['library'][] = 'arlo/arlo-calendar';
 }
 
 /**
  * Implements hook_custom_event_templates().
  */
-function arlo_custom_event_templates() {
-  return [
-    'test_machine_name' => 'Test Machine Name',
-  ];
-}
+// function arlo_custom_event_templates() {
+//   return [
+//     'test_machine_name' => 'Test Machine Name',
+//   ];
+// }

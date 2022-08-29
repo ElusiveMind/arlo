@@ -1,0 +1,295 @@
+.arlo-calendar {
+  font-family: "Source Sans Pro", Arial, Tahoma, sans-serif
+}
+
+.arlo-calendar * {
+  outline: 0
+}
+
+.arlo-calendar .fc-view-container {
+  position: relative
+}
+
+.arlo-calendar .arlo-loading {
+  display: none;
+  background: url(../images/ajax-loader.gif) center no-repeat #fff;
+  opacity: .7;
+  -ms-filter: "alpha(opacity=70)";
+  filter: alpha(opacity=70);
+  -khtml-opacity: .7;
+  -moz-opacity: .7;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100
+}
+
+.arlo-calendar .fc-event:hover,
+.arlo-calendar a.label:hover,
+.arlo-calendar button.fc-button:hover {
+  opacity: .7
+}
+
+.arlo-calendar input,
+.arlo-calendar select {
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin: 0;
+  height: 2.1em;
+  padding: 0 .6em;
+  font-size: .9em;
+  border-color: rgba(0, 0, 0, .1)
+}
+
+.arlo-calendar .fc-toolbar .fc-center h2 {
+  font-size: 3em
+}
+
+.arlo-calendar button.fc-button {
+  background: #F1F7FB;
+  border: 0;
+  box-shadow: none;
+  padding: 10px 25px;
+  height: auto;
+  width: auto;
+  text-transform: capitalize;
+  font-size: 1.2em
+}
+
+.arlo-calendar button.fc-button.fc-state-active {
+  font-weight: 700
+}
+
+@media (max-width:990px) {
+  .arlo-calendar .fc-toolbar .fc-left,
+  .arlo-calendar .fc-toolbar .fc-right {
+    float: none
+  }
+  .arlo-calendar .fc-toolbar .fc-center {
+    display: block
+  }
+  .arlo-calendar button.fc-button {
+    display: block;
+    width: 100%;
+    margin-bottom: 1em
+  }
+  .arlo-calendar .fc-button-group {
+    width: 100%;
+    margin-bottom: 2em
+  }
+  .arlo-calendar .fc-button-group>:first-child,
+  .arlo-calendar .fc-button-group>:last-child {
+    width: 50%
+  }
+  .arlo-calendar .fc-button-group .fc-basicDay-button,
+  .arlo-calendar .fc-button-group .fc-basicWeek-button,
+  .arlo-calendar .fc-button-group .fc-month-button {
+    width: 33%
+  }
+}
+
+.arlo-calendar .fc-popover .fc-header {
+  padding: 6px 10px;
+  font-size: 1.1em
+}
+
+.arlo-calendar .fc-toolbar {
+  margin-bottom: 2em
+}
+
+@media (max-width:990px) {
+  .arlo-calendar .fc-toolbar>*>* {
+    margin-left: 0
+  }
+  .arlo-calendar .arlo-facet-container button,
+  .arlo-calendar .arlo-facet-container input,
+  .arlo-calendar .arlo-facet-container select {
+    margin-bottom: .5em
+  }
+}
+
+.arlo-calendar .fc-more-popover .fc-event-container {
+  padding: 16px 12px
+}
+
+.arlo-calendar .fc-icon-left-single-arrow:after,
+.arlo-calendar .fc-icon-right-single-arrow:after {
+  top: -30%
+}
+
+.arlo-calendar .fc-state-default.fc-corner-right {
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px
+}
+
+.arlo-calendar .fc-state-default.fc-corner-left {
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px
+}
+
+.arlo-calendar .fc-basic-view .fc-day-number {
+  padding: 5px 10px;
+  font-size: 1.8em
+}
+
+.arlo-calendar .fc-basic-view .fc-day-top {
+  text-align: right
+}
+
+.arlo-calendar.fc-unthemed .fc-today {
+  background-color: #F1F7FB;
+  border-color: #ddd
+}
+
+.arlo-calendar th.fc-day-header.fc-widget-header {
+  font-size: 1.2em;
+  padding: 8px;
+  text-transform: uppercase
+}
+
+.arlo-calendar a.fc-more {
+  font-size: 1.2em;
+  padding-left: 10px;
+  padding-top: 4px;
+  display: block;
+  color: #ED007B
+}
+
+.arlo-calendar.fc-unthemed .fc-divider,
+.arlo-calendar.fc-unthemed .fc-popover,
+.arlo-calendar.fc-unthemed .fc-row,
+.arlo-calendar.fc-unthemed tbody,
+.arlo-calendar.fc-unthemed td,
+.arlo-calendar.fc-unthemed th,
+.arlo-calendar.fc-unthemed thead {
+  border-color: #ececec
+}
+
+.arlo-calendar .arlo-facet-container input[type=text],
+.arlo-calendar select.arlo-facet-select {
+  background: #F1F7FB;
+  font-size: 1.2em;
+  border: none;
+  padding: 11px 16px;
+  height: auto;
+  width: auto;
+  border-radius: 25px
+}
+
+.arlo-calendar .arlo-facet-tag-container>div {
+  font-size: 1.2em;
+  padding-bottom: 10px
+}
+
+.arlo-calendar a.label {
+  background-color: #ED007B;
+  font-size: 1.1em;
+  font-weight: 400;
+  border-radius: 30px;
+  padding: 3px 12px
+}
+
+.arlo-calendar a.label.selected {
+  background-color: #0086E3
+}
+
+.arlo-calendar .fc-event {
+  background-color: #ED007B;
+  border: 1px solid #ED007B;
+  border-radius: 20px;
+  padding: 2px 10px;
+  font-size: 1em
+}
+
+.arlo-calendar .fc-event.color1 {
+  border: 1px solid #ED007B;
+  background-color: #ED007B
+}
+
+.arlo-calendar .fc-event.color2 {
+  border: 1px solid #1DC6BC;
+  background-color: #1DC6BC
+}
+
+.arlo-calendar .fc-event.color3 {
+  border: 1px solid #FFBD1F;
+  background-color: #FFBD1F
+}
+
+.arlo-calendar .fc-event.color4 {
+  border: 1px solid #0086E3;
+  background-color: #0086E3
+}
+
+.arlo-calendar .fc-event.color5 {
+  border: 1px solid #ae5ed0;
+  background-color: #ae5ed0
+}
+
+.arlo-calendar .fc-event.color6 {
+  border: 1px solid #ff6000;
+  background-color: #ff6000
+}
+
+.arlo-calendar .fc-event.color7 {
+  border: 1px solid #f3404d;
+  background-color: #f3404d
+}
+
+.arlo-calendar .fc-event.color8 {
+  border: 1px solid #7a59e5;
+  background-color: #7a59e5
+}
+
+.arlo-calendar .fc-event.color9 {
+  border: 1px solid #99e060;
+  background-color: #99e060
+}
+
+.arlo-calendar .fc-event.color10 {
+  border: 1px solid #00b5e3;
+  background-color: #00b5e3
+}
+
+.arlo-calendar.fc .fc-toolbar .arlo-facet-container {
+  float: none;
+  text-align: left
+}
+
+.arlo-calendar.fc .fc-toolbar .arlo-facet-container input,
+.arlo-calendar.fc .fc-toolbar .arlo-facet-container select {
+  width: 100%
+}
+
+.arlo-calendar.fc .fc-toolbar .arlo-facet-container .label {
+  display: inline-block;
+  cursor: pointer;
+  margin-left: 4px;
+  margin-bottom: 4px;
+  line-height: 1.4em
+}
+
+.arlo-calendar.fc .fc-toolbar .fc-right .arlo-facet-container {
+  text-align: right
+}
+
+.arlo-calendar.fc table {
+  margin-bottom: 0
+}
+
+.arlo-calendar .fc-left .arlo-facet-tag-container .label:first-child {
+  margin-left: 0
+}
+
+.arlo-calendar .arlo-facet-tag-container .label span.glyphicon {
+  display: none
+}
+
+.arlo-calendar .arlo-facet-tag-container .label.selected span.glyphicon {
+  display: inline-block;
+  margin-left: 4px
+}

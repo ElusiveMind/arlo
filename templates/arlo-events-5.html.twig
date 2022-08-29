@@ -1,0 +1,109 @@
+{{ attach_library('arlo/arlo-events') }}
+{{ attach_library('arlo/arlo-events-5') }}
+<script language="Javascript">
+  document.addEventListener("arlojscontrolsloaded", function () {
+    var platformID = "{{ platform_id }}";
+
+    var eventGrid2 = {
+      moduleType: "UpcomingEvents",
+      targetElement: "#upcoming-events-grid2",
+      template: "#upcoming-events-grid2-template",
+      maxCount: {{ max_count }},
+      includeLoadMoreButton: {{ show_load_more }},
+      loadMoreButtonText: "{{ load_more_text }}",
+      includeArloLink: false,
+      callbacks: {
+        onShow: grid2OnShow
+      },
+      filter: {
+        {% if locations is not empty %}locname: ["{% for location in locations %}{{ location|trim }}","{% endfor %}"],{% endif %}
+        {% if tag is not empty %}tag: "{{ tag }}",{% endif %}
+        {% if event_ids is not empty %}eventID: [{% for event_id in event_ids %}{{ event_id|trim }},{% endfor %}],{% endif %}
+        {% if templatecategoryid is not empty %}templatecategoryid: "{{ template_category_id }}"{% endif %}
+      }
+    };
+
+    var app = new window.ArloWebControls();
+
+    app.start({
+      "platformID": platformID,
+      "showDevErrors": {{ dev_mode }},
+      "modules": [eventGrid2]
+    });
+  });
+
+
+  function grid2OnShow(getRenderCollectionElements, $) {
+    var listItems = getRenderCollectionElements();
+    var listParent = $(listItems[0]).parent()[0];
+
+    function setListItemsHeight() {
+        $(listParent).find(".arlo-event-listitem").height("auto");
+        var tallestListItemHeight = 0;
+
+        $.each($(listParent).find(".arlo-event-listitem"), function (index, listItem) {
+            // Get height from combining heights of list item elements (because of issue with using list items own height)
+            var height = 0;
+            height += $(listItem).find(".date").height();
+            height += $(listItem).find("h3").height();
+            height += $(listItem).find(".provider").height();
+            height += $(listItem).find(".summary").height();
+            height += $(listItem).find(".offers").height();
+            height += $(listItem).find(".more-information").height();
+
+            if (height > tallestListItemHeight) {
+                tallestListItemHeight = height;
+            }
+        });
+
+        $(".arlo-event-listitem").height(tallestListItemHeight + 110);
+    }
+
+    setTimeout(function () {
+        setListItemsHeight();
+    }, 0);
+
+    $(window).bind('resize', function () {
+        setTimeout(function () {
+            setListItemsHeight();
+        }, 100);
+    });
+  }
+</script>
+
+<!-- Target elements -->
+<div class="arlo">
+  <div id="upcoming-events-grid2"></div>
+</div>
+
+<!-- Templates -->
+<script type='text/template' id='upcoming-events-grid2-template'>
+  <h3><%- Name %></h3>
+  <div class="provider">
+    <% if (typeof(Provider.Name) !== "undefined" && Provider.Name !== "") { %>
+    <div class="arlo-provider-info">
+      Delivered By
+      <% if (typeof(Provider.WebsiteUri) !== "undefined" && Provider.WebsiteUri !== "") { %>
+        <a class="arlo-provider-name" href="<%- Provider.WebsiteUri %>"><%- Provider.Name %></a>
+      <% } else { %>
+        <span class="arlo-provider-name"><%- Provider.Name %></span>
+      <% } %>
+    </div>
+    <% } %>
+  </div>
+  <div class="summary"><%- Summary %></div>
+  <div class="offers">
+    <%= formatAdvertisedOffers({
+      showPriceWithTaxInclusive: true,
+      showSingleOffer: false,
+      showLabel: true,
+      showCurrencyCode: true,
+      showMessage: true,
+      showTaxRate: true
+    }) %>
+  </div>
+  <div class="date">
+    <span class="day-of-month"><%= formatDate(StartDateTime, "DD") %></span>
+    <%= formatDate(StartDateTime, "MMM") %>
+  </div>
+</script>

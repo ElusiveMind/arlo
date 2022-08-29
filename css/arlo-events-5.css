@@ -1,0 +1,250 @@
+body{
+  font-family: 'Source Sans Pro', Arial, Tahoma, sans-serif;
+  margin: 0;
+}
+
+ol, ul, li {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.arlo-page-title {
+    text-align: center;
+}
+
+.arlo-page-title p {
+    font-size: 14px;
+    max-width: 500px;
+    margin: 0 auto 20px auto;
+}
+
+.arlo-page-title h2 {
+    font-size: 34px;
+    margin-bottom: 30px;
+    font-weight: 400;
+}
+
+.section-header{
+    clear: both;
+    font-size: 26px;
+    margin: 20px 0;
+}
+
+/****** Loader ******/
+
+.arlo .arlo-loading-overlay {
+  position: fixed;
+  z-index: 999;
+  height: 2em;
+  width: 2em;
+  overflow: show;
+  margin: auto;
+  bottom: 50%;
+  top: 50%;
+  left: 50%;
+  right: 50%;
+}
+
+.arlo .arlo-loading-overlay:before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.arlo .arlo-loading-overlay:not(:required) {
+  /* hide "loading..." text */
+  font: 0/0 a;
+  color: transparent;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
+}
+
+.arlo .arlo-loading-overlay:not(:required):after {
+  content: '';
+  display: block;
+  font-size: 10px;
+  width: 1em;
+  height: 1em;
+  margin-top: -0.5em;  
+  -webkit-animation: spinner 1500ms infinite linear;
+  animation: spinner 1500ms infinite linear;
+  border-radius: 0.5em;
+  box-shadow: rgba(0, 0, 0, 0.30) 1.5em 0 0 0, rgba(0, 0, 0, 0.30) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.30) 0 1.5em 0 0, rgba(0, 0, 0, 0.30) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.30) -1.5em 0 0 0, rgba(0, 0, 0, 0.30) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.30) 0 -1.5em 0 0, rgba(0, 0, 0, 0.30) 1.1em -1.1em 0 0;
+}
+
+@-webkit-keyframes spinner {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spinner {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+.arlo html {
+  font-family: sans-serif;
+  /* 1 */
+  -ms-text-size-adjust: 100%;
+  /* 2 */
+  -webkit-text-size-adjust: 100%;
+  /* 2 */
+}
+
+
+
+/****** Grid 2 ******/
+
+#upcoming-events-grid2 {
+    margin-top: 28px;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 17px;
+    color: #000;
+    line-height: 26px;
+    color: #ffffff;
+}
+#upcoming-events-grid2 .arlo-event-list {
+  margin: 0;
+  padding: 2em 1em;
+  background: #006c82;
+}
+#upcoming-events-grid2 .arlo-event-list .arlo-event-listitem {
+    background: #4C98A7;
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr=#4cde0054, endColorstr=#4cde0054);
+    zoom: 1;
+    width: 49%;
+    float: left;
+    margin: 0 0.5%;
+    vertical-align: top;
+    display: inline-block;
+    padding: 20px 45px;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 14px;
+    line-height: 21px;
+    margin-bottom: 10px;
+    border-radius: 2px;
+}
+#upcoming-events-grid2 .date {
+    width: 98px;
+    height: 98px;
+    border-radius: 50%;
+    background-color: #31859B;
+    font-size: 24px;
+    color: #ffffff;
+    font-weight: 400;
+    margin: auto;
+    margin-top: 38px;
+    padding: 1px 0px 0px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+#upcoming-events-grid2 .day-of-month {
+    display: block;
+    font-size: 56px;
+    font-family: 'Source Sans Pro', sans-serif;
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+#upcoming-events-grid2 .offers ul {
+    list-style: none;
+}
+
+#upcoming-events-grid2 .arlo-original-price{
+    text-decoration: line-through;
+}
+
+#upcoming-events-grid2 a {
+    color: #c2e4ec;
+    text-decoration: none;
+}
+
+#upcoming-events-grid2 a:hover {
+    text-decoration: underline;
+}
+
+#upcoming-events-grid2 label {
+    font-weight: 700;
+    margin: 5px 0;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+#upcoming-events-grid2 h3 {
+    line-height: 34px;
+    margin-bottom: 11px;
+    margin: 20px 0px 10px;
+    font-size: 32px;
+    font-weight: 400;
+}
+
+#upcoming-events-grid2 .offers {
+    font-size: 1.3em;
+    margin: 20px 0 0;
+}
+
+#upcoming-events-grid2 .summary {
+    font-size: 15px;
+    line-height: 20px;
+    margin-top: 20px;
+}
+
+#upcoming-events-grid2 .arlo-show-more-container {
+    clear: both;
+    text-align: center;
+    padding-top: 20px;
+}
+
+
+#upcoming-events-grid2 .arlo-show-more {
+    text-align: center;
+    color: white;
+    background: #4c98a7;
+    display: inline-block;
+    padding: 8px 50px;
+    cursor: pointer;
+    border-radius: 2px;
+    font-size: 21px;
+}
+
+#upcoming-events-grid2 .arlo-show-more:hover {
+    background-color: #31859b;
+}
+
+#upcoming-events-grid2 li.arlo-offer-li {
+    margin: 8px 0;
+}
+
+#upcoming-events-grid2 .arlo-discount-offer {
+    color: #c2e4ec;
+}
+
+.arlo[max-width~="800px"] #upcoming-events-grid2 .arlo-event-list .arlo-event-listitem {
+    width: 100%;
+}
+
+.arlo[max-width~="560px"] #upcoming-events-grid2 .more-information,
+.arlo[max-width~="560px"] #upcoming-events-grid2 .arlo-show-more {
+    width: 100%;
+    box-sizing: border-box;
+}

@@ -1,10 +1,41 @@
-arlo:
+arlo-events:
   version: 1.x
   js:
     //packages.arlocdn.net/jscontrols/1.0/resources/resizesensor.js: { type: external }
     //packages.arlocdn.net/jscontrols/1.0/resources/elementqueries.js: { type: external }
     //connect.arlocdn.net/jscontrols/1.1/init.js: { type: external, attributes: { defer: true } }
     //cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js: { type: external }
+
+arlo-calendar:
+  version: 1.x
+  js:
+    http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js: { type: external }
+    http://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.0.1/fullcalendar.min.js: { type: external }
+    http://connect.arlocdn.net/calendarcontrol/1.0/init.js: { type: external, attributes: { defer: true } }
+    http://cdnjs.cloudflare.com/ajax/libs/speakingurl/10.0.0/speakingurl.min.js: { type: external }
+  css:
+    theme:
+      css/arlo-calendar.css: {}
+
+arlo-search:
+  version: 1.x
+  js:
+    //cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js: { type: external }
+    //packages.arlocdn.net/jscontrols/1.0/resources/resizesensor.js: { type: external }
+    //packages.arlocdn.net/jscontrols/1.0/resources/elementqueries.js: { type: external }
+    //connect.arlocdn.net/jscontrols/1.1/init.js: { type: external, attributes: { defer: true } }
+
+arlo-search-1:
+  version: 1.x
+  css:
+    theme:
+      css/arlo-search-1.css: {}
+
+arlo-search-2:
+  version: 1.x
+  css:
+    theme:
+      css/arlo-search-2.css: {}
 
 arlo-events-1:
   version: 1.x
