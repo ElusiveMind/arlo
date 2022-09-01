@@ -1,6 +1,6 @@
 <script src="//code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
-{{ attach_library('arlo/arlo-events') }}
-{{ attach_library('arlo/arlo-events-6') }}
+{{ attach_library('arlo/arlo-upcoming-events') }}
+{{ attach_library('arlo/arlo-upcoming-events-6') }}
 <script language="Javascript">
   (function($, ElementQueries) {
     document.addEventListener("arlojscontrolsloaded", function() {
@@ -89,13 +89,10 @@
 
 <!-- Target Elements -->
 <div class="arlo">
-
-<div id="upcoming-events"></div>
+  <div id="upcoming-events"></div>
 </div>
 
 <!-- Templates -->
-
-
 <script type='text/template' id='upcoming-events-template'>
     <% if (typeof(Location.IsOnline) !== "undefined" && Location.IsOnline === true && (typeof(Location.Name) !== "undefined" && Location.Name !== "")) { %>
         <div class="arlo-event-card arlo-online-card">

@@ -61,17 +61,17 @@ class ArloUpcomingEventsBlock extends BlockBase {
 
     // Add our standard templates that come with this module.
     $options += [
-      1 => 'Standard Template 1',
-      2 => 'Standard Template 2',
-      3 => 'Standard Template 3',
-      4 => 'Standard Template 4',
-      5 => 'Standard Template 5',
-      6 => 'Standard Template 6',
+      1 => 'Standard Upcoming Events Template 1',
+      2 => 'Standard Upcoming Events Template 2',
+      3 => 'Standard Upcoming Events Template 3',
+      4 => 'Standard Upcoming Events Template 4',
+      5 => 'Standard Upcoming Events Template 5',
+      6 => 'Standard Upcoming Events Template 6',
     ];
 
     $form['template_id'] = [
       '#type' => 'select',
-      '#title' => $this->t('Upcoming Event Templates'),
+      '#title' => $this->t('Select Upcoming Event Template'),
       '#options' => $options,
       '#required' => TRUE,
       '#default_value' => $config['template_id'],
@@ -80,7 +80,7 @@ class ArloUpcomingEventsBlock extends BlockBase {
 
     $form['max_count'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Maximum Number Of Events'),
+      '#title' => $this->t('Maximum Number of Events to Display'),
       '#default_value' => $config['max_count'],
       '#required' => TRUE,
       '#maxlength' => 2,
@@ -200,7 +200,7 @@ class ArloUpcomingEventsBlock extends BlockBase {
       $event_ids = explode(',', $block_config['event_ids']);
     }
     return [
-      '#theme' => 'arlo_events_' . $block_config['template_id'],
+      '#theme' => 'arlo_upcoming_events_' . $block_config['template_id'],
       '#platform_id' => $block_config['platform_id'],
       '#max_count' => $block_config['max_count'],
       '#show_load_more' => $block_config['show_load_more'],

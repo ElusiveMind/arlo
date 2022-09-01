@@ -7,14 +7,14 @@ use Drupal\Core\Config\ConfigBase;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Provides an 'Arlo Search' block.
+ * Provides an 'Arlo Event' block.
  *
  * @Block(
- *  id = "arlo_search_block",
- *  admin_label = @Translation("Arlo Search"),
+ *  id = "arlo_event_block",
+ *  admin_label = @Translation("Arlo Event"),
  * )
  */
-class ArloSearchBlock extends BlockBase {
+class ArloEventBlock extends BlockBase {
 
   /**
    * {@inheritdoc}
@@ -45,20 +45,20 @@ class ArloSearchBlock extends BlockBase {
      * Pull in any templates configured in custom hooks.
      */
     $options = [];
-    $hook = 'custom_search_templates';
+    $hook = 'custom_event_templates';
     \Drupal::moduleHandler()->invokeAllWith($hook, function (callable $hook, string $module) use (&$options) {
       $options = $hook();
     });
 
-    // Add our standard templates that come with this module.
+    // Add our standard templates that come with this module. We do it this way
+    // so that the custom templates from hooks are on the top of the array list.
     $options += [
-      1 => 'Standard Search Template 1',
-      2 => 'Standard Search Template 2',
+      1 => 'Standard Event Template 1',
+      2 => 'Standard Event Template 2',
     ];
-
     $form['template_id'] = [
       '#type' => 'select',
-      '#title' => $this->t('Select Search Template'),
+      '#title' => $this->t('Select Event Template'),
       '#options' => $options,
       '#required' => TRUE,
       '#default_value' => $config['template_id'],
@@ -85,7 +85,7 @@ class ArloSearchBlock extends BlockBase {
     // Retrieve existing configuration for this block.
     $block_config = $this->getConfiguration();
     return [
-      '#theme' => 'arlo_search_' . $block_config['template_id'],
+      '#theme' => 'arlo_event_' . $block_config['template_id'],
       '#platform_id' => $block_config['platform_id'],
     ];
   }

@@ -1,5 +1,5 @@
-{{ attach_library('arlo/arlo-events') }}
-{{ attach_library('arlo/arlo-events-1') }}
+{{ attach_library('arlo/arlo-upcoming-events') }}
+{{ attach_library('arlo/arlo-upcoming-events-1') }}
 <script language="Javascript">
   document.addEventListener("arlojscontrolsloaded", function() {
     var platformID = "{{ platform_id }}";
@@ -44,9 +44,6 @@
 </script>
 
 <div class="arlo">
-  <div class="arlo-page-title arlo-font-primary">
-    <h2>Demos - Upcoming Events - List 1</h2>
-  </div>
   <div id="upcoming-events-list1"></div>
 </div>
 

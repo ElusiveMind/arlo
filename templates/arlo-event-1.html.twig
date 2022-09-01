@@ -1,0 +1,444 @@
+{{ attach_library('arlo/arlo-event-header') }}
+{{ attach_library('arlo/arlo-event-footer') }}
+{{ attach_library('arlo/arlo-event-1') }}
+<script language="Javascript">
+  (function ($, ElementQueries) {
+    document.addEventListener('arlojscontrolsloaded', function () {
+        var platformID = '{{ platform_id }}'
+
+        var eventTemplateDemo = {
+            moduleType: 'EventTemplate',
+            targetElement: '#arlo-event-template',
+            template: '#event-template-template',
+            queryStringConfig: ['eventtemplate'],
+            filter: {
+                code: '3DSCAN-ON',
+            },
+        }
+
+        var app = new window.ArloWebControls()
+
+        app.start({
+            platformID: platformID,
+            showDevErrors: false,
+            modules: [eventTemplateDemo],
+        })
+        window.loadedFilters = 0
+    })
+
+    function appendRegisterInterest(eventTemplate) {
+        var noResultsContainer = $(eventTemplate).find(
+                '.arlo-no-results-found'
+            ),
+            registerInterestContainer = $(eventTemplate).find(
+                '.arlo-register-interest'
+            ),
+            registerInterestLink = registerInterestContainer.find(
+                '.arlo-register-interest-link'
+            )
+
+        if (noResultsContainer.length !== 0) {
+            if (
+                registerInterestLink.length !== 0 &&
+                noResultsContainer.find('.arlo-register-interest-link')
+                    .length == 0
+            ) {
+                var registerLinkClone = registerInterestLink.clone()
+                registerLinkClone.html('Register Interest')
+                noResultsContainer.append(registerLinkClone)
+            }
+
+            registerInterestContainer.hide()
+        } else {
+            noResultsContainer.hide()
+            registerInterestContainer.show()
+        }
+    }
+
+    window.eventTemplateOnShow = function (getEventListItemElements) {
+        window.loadedFilters++
+        var eventElements = getEventListItemElements()
+        var listParent =
+            eventElements.length === 0
+                ? $('.arlo-template-events')
+                : $(eventElements).closest('.arlo-event-list')
+
+        setTimeout(function () {
+            afterRender()
+        }, 0)
+
+        function afterRender() {
+            ElementQueries.init()
+
+            setListItemsHeight()
+
+            $(window).resize(function () {
+                setListItemsHeight()
+            })
+
+            // Hide timezone selector if there are no online events
+            if ($('.arlo-online').length < 1) {
+                $('.arlo-timezone-select').hide()
+            } else {
+                $('.arlo-timezone-select').show()
+                $('.arlo-timezone-select').parent().css('float', 'right')
+            }
+
+            // Set up tooltips
+            $.each(eventElements, function (index, listItem) {
+                var tooltipElement = $(listItem).find(
+                    '[data-toggle="tooltip"]'
+                )[0]
+                if (tooltipElement) {
+                    var toolTipContent = $(listItem).find('.tooltipcontent')[0]
+                    if (toolTipContent) {
+                        $(tooltipElement).attr(
+                            'data-original-title',
+                            $(toolTipContent).html()
+                        )
+                        $(tooltipElement).tooltip()
+                    }
+                }
+            })
+
+            appendRegisterInterest(
+                $(listParent).closest('.arlo-eventtemplate-listitem')
+            )
+        }
+
+        // Get height from combined heights of list item elements (because of issue with using list items own height)
+        function setListItemsHeight() {
+            if ($(listParent).width() < 500) {
+                return
+            }
+            $(listParent).find('.arlo-event-listitem').height('auto')
+            var tallestListItemHeight = 0
+            $.each(
+                $(listParent).find('.arlo-event-listitem'),
+                function (index, listItem) {
+                    var height = 0
+                    height += $(listItem).find('.arlo-item-header').height()
+                    height += $(listItem).find('.arlo-duration').height()
+                    height += $(listItem).find('.arlo-notice').height()
+                    height += $(listItem).find('.arlo-location').height()
+                    height += $(listItem).find('.arlo-presenter').height()
+                    height += $(listItem).find('.arlo-offers').height()
+                    height += $(listItem).find('.arlo-event-register').height()
+
+                    if (height > tallestListItemHeight) {
+                        tallestListItemHeight = height
+                    }
+                }
+            )
+            // Set all list items to height of tallest item plus padding.
+            $(listParent)
+                .find('.arlo-eventlistitem-inner')
+                .height(tallestListItemHeight + 100)
+        }
+
+        // Load placeholder when page inits
+
+        $('.arlo-loading-placeholder').hide()
+        $('.UpcomingEvents').css('opacity', 1)
+        $('.Filters').css('min-height', 0)
+        $('.arlo-template-eventlist').css('min-height', 0)
+    }
+
+    window.loadOnlineActivities = function (getOAListItemElements) {
+        var oaElements = getOAListItemElements()
+        var listParent =
+            oaElements.length === 0
+                ? $('.arlo-online-activities')
+                : $(oaElements).closest('.arlo-oa-listitems')
+
+        appendRegisterInterest(
+            $(listParent).closest('.arlo-eventtemplate-listitem')
+        )
+    }
+
+    window.onFilterLoad = function () {
+        if (window.loadedFilters === 0) {
+            window.loadedFilters++
+        }
+        $('.arlo-filter-toggle-show').click(function () {
+            $('.arlo-filter-toggle-hide').removeClass('hidden')
+            $(this).addClass('hidden')
+            $(this).parent().parent().addClass('arlo-show-filter')
+        })
+
+        $('.arlo-filter-toggle-hide').click(function () {
+            $('.arlo-filter-toggle-show').removeClass('hidden')
+            $(this).addClass('hidden')
+            $(this).parent().parent().removeClass('arlo-show-filter')
+        })
+    }
+
+    function loadPlaceholder(placeholderTemplate, placeholderTarget, maxCount) {
+        var template = $(placeholderTemplate).html(),
+            target = $(placeholderTarget),
+            count = maxCount ? maxCount : 2
+
+        for (var i = 0; i < count; i++) {
+            target.append(template)
+        }
+    }
+  })(jQuery, window.ElementQueries)
+</script>
+
+
+<!-- Target Elements -->
+<div class="arlo">
+    <div id="arlo-event-template" class="arlo-header"></div>
+</div>
+
+<!-- Templates -->
+<script type="text/template" id="event-template-template">
+    <div class="arlo-page-title arlo-font-special arlo-full-width">
+        <div class="arlo-text-color-contrast arlo-page-title-inner">
+            <%- Name %>
+        </div>
+        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/597099/heading_separator.png">
+    </div>
+
+    <div class="arlo-main-content">
+        <div class="arlo-text-color-normal arlo-font-primary arlo-summary">
+            <%- Summary %>
+        </div>
+        <div class="arlo-template-events">
+            <%= showEventTemplateFilters({
+                template: "#filter-template",
+                loadImmediately: true,
+                filterControlId: 1,
+                callbacks: { onRender: "onFilterLoad" }
+            }) %>
+            <div class="arlo-loading-placeholder">
+                <div class="arlo-placeholder-events clearfix" id="eventtemplate-event-placeholder-target">
+                    <div class="arlo-placeholder-event">
+                        <div class="arlo-placeholder-event-inner">
+                            <div class="arlo-placeholder-event-details">
+                                <div class="arlo-placeholder-date"></div>
+                                <div class="arlo-placeholder-text"></div>
+                                <div class="arlo-placeholder-text"></div>
+                            </div>
+                            <div class="arlo-placeholder-button"></div>
+                        </div>
+                    </div>
+                    <div class="arlo-placeholder-event">
+                        <div class="arlo-placeholder-event-inner">
+                            <div class="arlo-placeholder-event-details">
+                                <div class="arlo-placeholder-date"></div>
+                                <div class="arlo-placeholder-text"></div>
+                                <div class="arlo-placeholder-text"></div>
+                            </div>
+                            <div class="arlo-placeholder-button"></div>
+                        </div>
+                    </div>
+                    <div class="arlo-placeholder-event">
+                        <div class="arlo-placeholder-event-inner">
+                            <div class="arlo-placeholder-event-details">
+                                <div class="arlo-placeholder-date"></div>
+                                <div class="arlo-placeholder-text"></div>
+                                <div class="arlo-placeholder-text"></div>
+                            </div>
+                            <div class="arlo-placeholder-button"></div>
+                        </div>
+                    </div>
+                    <div class="arlo-placeholder-event">
+                        <div class="arlo-placeholder-event-inner">
+                            <div class="arlo-placeholder-event-details">
+                                <div class="arlo-placeholder-date"></div>
+                                <div class="arlo-placeholder-text"></div>
+                                <div class="arlo-placeholder-text"></div>
+                            </div>
+                            <div class="arlo-placeholder-button"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <%= showEventTemplateEventsList({
+                template: "#event-template",
+                loadImmediately: true,
+                includeLoadMoreButton: true,
+                loadMoreButtonText: "Load More",
+                maxCount: 4,
+                filterControlId: 1,
+                queryStringConfig: ["event"],
+                noResultsText: "<span class='arlo-no-event-dates'><span class='arlo-no-results-text arlo-text-color-light'>No event dates</span></span>",
+                customUrls:{
+                    eventtemplate: "/event-template/",
+                    venue: "/venue/",
+                    presenter: "/presenter/"
+                },
+                callbacks: {
+                    onShow: eventTemplateOnShow
+                }
+            }) %>
+
+            <div class="arlo-register-interest-container">
+                <% if (RegisterPrivateInterestUri !== "") { %>
+                    <span class="arlo-register-private-interest">
+                        Want to run this course in-house? <a class="arlo-text-color-link" href="<%- RegisterPrivateInterestUri %>">Enquire about running this course in-house</a>
+                    </span>
+                <% } %>
+
+                <% if (RegisterInterestUri !== "") { %>
+                    <span class="arlo-register-interest">
+                        None of these dates work for you? <a class="arlo-register-interest-link arlo-text-color-link" href="<%- RegisterInterestUri %>">Suggest another date & time</a>
+                    </span>
+                <% } %>
+            </div>
+        </div>
+        <div class="arlo-online-activities">
+            <%= showEventTemplateOnlineActivitiesList({
+                template: "#online-activities-template",
+                loadImmediately: true,
+                maxCount: 1,
+                callbacks: {
+                    onRender: loadOnlineActivities
+                }
+            }) %>
+        </div>
+
+        <%= ContentFields %>
+    </div>
+</script>
+
+<script type="text/template" id="event-template">
+    <div class="arlo-eventlistitem-inner">
+        <div class="arlo-item-header arlo-font-special arlo-text-color-darkest">
+            <%= formatDate(StartDateTime, "ddd DD MMM") %>
+        </div>
+
+        <div class="arlo-details">
+            <div class="arlo-duration arlo-text-color-normal">
+                <%= DurationDescription %>
+                <% if (typeof(Location.IsOnline) !== "undefined" && Location.IsOnline === true) { %>
+                    <%- TimeZone %>
+                <% } %>
+            </div>
+
+            <% if (Notice !== "") { %>
+                <div class="arlo-notice arlo-text-color-light">
+                    <%- Notice %>
+                </div>
+            <% } %>
+
+            <% if (Sessions.length > 1) { %>
+                <div class="arlo-sessions">
+                    <span class="arlo-duration arlo-text-color-lightest">
+                        <i class="fa fa-clock-o"></i>
+                        <span class="arlo-session-info arlo-text-color-link" data-toggle="tooltip" data-placement="bottom" data-html="true" title="" style="display: inline;" data-original-title="">
+                            Show sessions
+                        </span>
+                        <div class="tooltipcontent">
+                            <h4>Session details</h4>
+                            <%= formatSessionsInformation({ fieldsToDisplay: ['Name', 'Day', 'Date', 'TimeSpan'] }) %>
+                        </div>
+                    </span>
+                </div>
+            <% } %>
+
+            <% if (typeof(Location.ViewUri) !== "undefined" && Location.ViewUri !== "") { %>
+                <a class="arlo-text-color-link" href="<%- Location.ViewUri %>">
+            <% } else { %>
+                <div class="arlo-text-color-normal">
+            <% } %>
+
+            <% if (typeof(Location.IsOnline) !== "undefined" && Location.IsOnline === true) { %>
+                <div class="arlo-location arlo-online arlo-text-color-normal">
+                    <%- Location.Name %>
+                </div>
+            <% } %>
+
+            <% if (typeof(Location.IsOnline) === "undefined" || Location.IsOnline === false) { %>
+                <div class="arlo-location">
+                    <%- Location.Name %>
+                </div>
+            <% } %>
+
+            <% if (typeof(Location.ViewUri) !== "undefined" && Location.ViewUri !== "") { %>
+                </a>
+            <% } else { %>
+                </div>
+            <% } %>
+
+            <% if (Presenters.length > 0) { %>
+                <div class="arlo-presenter">
+                    <span class="arlo-presenterlabel arlo-text-color-normal">Presented by </span>
+                    <%= formatCollection(Presenters, "csv", true) %>
+                </div>
+            <% } %>
+
+            <div class="arlo-offers arlo-text-color-primary">
+                <%= formatAdvertisedOffers({freeText: "Free"}) %>
+            </div>
+
+        </div>
+
+        <%= formatRegistrationInfo('link') %>
+
+        <% if (PlacesRemaining !== "") { %>
+            <span class="arlo-places-remaining arlo-text-color-light"><%= PlacesRemaining %> Places Remaining</span>
+        <% } %>
+
+        <% if (IsFull !== "") { %>
+            <span class="arlo-places-remaining arlo-text-color-light"><%= EventFullMessage %></span>
+        <% } %>
+    </div>
+</script>
+
+<script type="text/template" id="online-activities-template">
+    <div class="arlo-clearfix">
+        <div class="arlo-details">
+            <div class="arlo-item-header">
+                <%- ReferenceTerms.Singular %>
+            </div>
+            <div class="arlo-delivery-description">
+                <%- DeliveryDescription %>
+            </div>
+            <div class="arlo-offers">
+                <%= formatAdvertisedOffers({ showPriceWithTaxInclusive: false }) %>
+            </div>
+        </div>
+
+        <div class="arlo-register">
+            <%= formatRegistrationInfo('link') %>
+        </div>
+    </div>
+</script>
+
+<script type="text/template" id="filter-template">
+    <div class="arlo-filters-container arlo-filters">
+        <div class="arlo-other-filters arlo-clearfix arlo-font-primary" id="filters">
+            <%= showFilter({filterCode: "locname"}) %>
+            <%= showFilter({filterCode: "onlineorvenue", displayStyle: "ul", onlineOrVenueText: {online: "Live online", venue: "At a venue"} }) %>
+            <%= showTimezoneSelector() %>
+        </div>
+
+        <div id="arlo-filter-toggle">
+            <div class="arlo-filter-toggle-show">
+                Show filters <i class="fa fa-chevron-down"></i>
+            </div>
+            <div class="arlo-filter-toggle-hide hidden">
+                Hide filters <i class="fa fa-chevron-up"></i>
+            </div>
+        </div>
+    </div>
+</script>
+
+<!-- Template: Placeholder -->
+<script
+    type="text/template"
+    id="eventtemplate-event-placeholder-template"
+>
+    <div class="arlo-placeholder-event">
+        <div class="arlo-placeholder-event-inner">
+            <div class="arlo-placeholder-event-details">
+                <div class="arlo-placeholder-date"></div>
+                <div class="arlo-placeholder-text"></div>
+                <div class="arlo-placeholder-text"></div>
+            </div>
+            <div class="arlo-placeholder-button"></div>
+        </div>
+    </div>
+</script>

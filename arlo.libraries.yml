@@ -1,4 +1,4 @@
-arlo-events:
+arlo-upcoming-events:
   version: 1.x
   js:
     //packages.arlocdn.net/jscontrols/1.0/resources/resizesensor.js: { type: external }
@@ -37,33 +37,58 @@ arlo-search-2:
     theme:
       css/arlo-search-2.css: {}
 
-arlo-events-1:
+arlo-upcoming-events-1:
   version: 1.x
   css:
     theme:
-      css/arlo-events-1.css: {}
-arlo-events-2:
+      css/arlo-upcoming-events-1.css: {}
+arlo-upcoming-events-2:
   version: 1.x
   css:
     theme:
-      css/arlo-events-2.css: {}
-arlo-events-3:
+      css/arlo-upcoming-events-2.css: {}
+arlo-upcoming-events-3:
   version: 1.x
   css:
     theme:
-      css/arlo-events-3.css: {}
-arlo-events-4:
+      css/arlo-upcoming-events-3.css: {}
+arlo-upcoming-events-4:
   version: 1.x
   css:
     theme:
-      css/arlo-events-4.css: {}  
-arlo-events-5:
+      css/arlo-upcoming-events-4.css: {}  
+arlo-upcoming-events-5:
   version: 1.x
   css:
     theme:
-      css/arlo-events-5.css: {}
-arlo-events-6:
+      css/arlo-upcoming-events-5.css: {}
+arlo-upcoming-events-6:
   version: 1.x
   css:
     theme:
-      css/arlo-events-6.css: {}
+      css/arlo-upcoming-events-6.css: {}
+
+arlo-event-header:
+  version: 1.x
+  header: true
+  js:
+    //code.jquery.com/jquery-1.12.4.min.js: { external: true }
+    //packages.arlocdn.net/jscontrols/1.0/resources/elementqueries.js: { external: true }
+  
+arlo-event-footer:
+  version: 1.x
+  js:
+    //cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js: { external: true }
+    //packages.arlocdn.net/jscontrols/1.0/resources/resizesensor.js: { external: true }
+    //connect.arlocdn.net/jscontrols/1.1/init.js: { external: true, defer: true }
+  css:
+    theme:
+      //maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css: { external: true }
+      //webcontrols.arlo.co/icons8/styles.css: { external: true }
+
+arlo-event-1:
+  version: 1.x
+  header: true
+  css:
+    theme:
+      css/arlo-event-1.css: {}

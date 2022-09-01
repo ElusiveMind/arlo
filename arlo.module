@@ -26,29 +26,35 @@ function arlo_help($route_name, RouteMatchInterface $route_match) {
  * Implements hook_theme().
  */
 function arlo_theme($existing, $type, $theme, $path) {
+
+  /**
+   * The Arlo calendar block template
+   */
   $data['arlo_calendar'] = [
     'variables' => [
       'platform_id' => NULL,
     ],
-    'template' => 'arlo-calendar'
+    'template' => 'arlo-calendar',
   ];
 
-  $data['arlo_search_1'] = [
-    'variables' => [
-      'platform_id' => NULL,
-    ],
-    'template' => 'arlo-search-1'
-  ];
+  /**
+   * The Arlo search block templates.
+   */
+  for ($i = 1; $i <= 2 ; $i++) {
+    $data['arlo_search_' . $i] = [
+      'variables' => [
+       'platform_id' => NULL,
+      ],
+      'template' => 'arlo-search-' . $i,
+    ];
+  }
 
-  $data['arlo_search_2'] = [
-    'variables' => [
-      'platform_id' => NULL,
-    ],
-    'template' => 'arlo-search-2'
-  ];
-  
+  /**
+   * Themes for upcoming events block. This is diffferent than the single event
+   * block and is separated as such.
+   */
   for ($i = 1; $i <= 6; $i++) {
-    $data['arlo_events_' . $i]['variables'] = [
+    $data['arlo_upcoming_events_' . $i]['variables'] = [
       'platform_id' => NULL,
       'show_load_more' => NULL,
       'load_more_text' => NULL,
@@ -60,11 +66,48 @@ function arlo_theme($existing, $type, $theme, $path) {
       'template_id' => NULL,
       'max_count' => NULL,
     ];
-    $data['arlo_events_' . $i]['template'] = 'arlo-events-' . $i;
+    $data['arlo_events_' . $i]['template'] = 'arlo-upcoming_events-' . $i;
   }
 
   /**
-   * Pull in any templates configured in custom hooks.
+   * Pull in any upcoming event custom templates configured in hooks.
+   */
+  $options = [];
+  $hook = 'custom_upcoming_event_templates';
+  \Drupal::moduleHandler()->invokeAllWith($hook, function (callable $hook, string $module) use (&$options) {
+    $options = $hook();
+  });
+
+  foreach ($options as $key => $result) {
+    $data['arlo_upcoming_events_' . $key]['variables'] = [
+      'platform_id' => NULL,
+      'show_load_more' => NULL,
+      'load_more_text' => NULL,
+      'dev_mode' => NULL,
+      'locations' => NULL,
+      'tag' => NULL,
+      'template_category_id' => NULL,
+      'event_ids' => NULL,
+      'template_id' => NULL,
+      'max_count' => NULL,
+    ];
+    $data['arlo_upcoming_events_' . $key]['template'] = 'arlo-upcoming-events-' . $key;
+  }
+
+  /**
+   * Themes for the individual event block. This is diffferent than the 
+   * upcoming events block and is separated as such.
+   */
+  for ($i = 1; $i <= 5; $i++) {
+    $data['arlo_event_' . $i]['variables'] = [
+      'platform_id' => NULL,
+      'template_id' => NULL,
+    ];
+    $data['arlo_event_' . $i]['template'] = 'arlo-event-' . $i;
+  }
+
+  /**
+   * Pull in any individual event custom templates configured in hooks.
    */
   $options = [];
   $hook = 'custom_event_templates';
@@ -73,35 +116,11 @@ function arlo_theme($existing, $type, $theme, $path) {
   });
 
   foreach ($options as $key => $result) {
-    $data['arlo_events_' . $key]['variables'] = [
+    $data['arlo_event_' . $key]['variables'] = [
       'platform_id' => NULL,
-      'show_load_more' => NULL,
-      'load_more_text' => NULL,
-      'dev_mode' => NULL,
-      'locations' => NULL,
-      'tag' => NULL,
-      'template_category_id' => NULL,
-      'event_ids' => NULL,
       'template_id' => NULL,
-      'max_count' => NULL,
     ];
-    $data['arlo_events_' . $key]['template'] = 'arlo-events-' . $key;
+    $data['arlo_event_' . $key]['template'] = 'arlo-event-' . $key;
   }
   return $data;
 }
-
-/**
- * Implements hook_page_attachments().
- */
-function arlo_page_attachments(&$variables) {
-  $variables['#attached']['library'][] = 'arlo/arlo-calendar';
-}
-
-/**
- * Implements hook_custom_event_templates().
- */
-// function arlo_custom_event_templates() {
-//   return [
-//     'test_machine_name' => 'Test Machine Name',
-//   ];
-// }
