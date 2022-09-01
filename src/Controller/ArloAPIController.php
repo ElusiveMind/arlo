@@ -90,7 +90,7 @@ class ArloAPIController extends ControllerBase {
     $config = $this->config('arlo.settings');
     $platform_id = $config->get('platform_id');
     $filter = (!empty($eventID)) ? '&filter=eventID=' . $eventID : NULL;
-    $url = 'https://' . $platform_id . '/api/2012-02-01/pub/resources/eventsearch?fields=description,summary,sessionsdescription,presenters,viewuri' . $filter;
+    $url = 'https://' . $platform_id . '/api/2012-02-01/pub/resources/eventsearch?fields=name,description,summary,sessionsdescription,presenters,viewuri' . $filter;
     $client = \Drupal::httpClient();
     try {
       $request = $client->get($url);
