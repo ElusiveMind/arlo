@@ -1,20 +1,29 @@
-# arlo.general:
-#   path: '/admin/structure/arlo'
-#   defaults:
-#     _controller: '\Drupal\system\Controller\SystemController::overview'
-#     link_id: 'arlo.general'
-#     _title: 'Arlo'
-#   requirements:
-#     _permission: 'administer arlo'
-#   options:
-#     _admin_route: TRUE
+arlo.general:
+  path: '/admin/structure/arlo'
+  defaults:
+    _controller: '\Drupal\system\Controller\SystemController::overview'
+    link_id: 'arlo.general'
+    _title: 'Arlo'
+  requirements:
+    _permission: 'administer arlo'
+  options:
+    _admin_route: TRUE
 
-# arlo.settings:
-#   path: 'admin/structure/arlo/settings'
-#   defaults:
-#     _form: '\Drupal\arlo\Form\ArloSettingsForm'
-#     _title: 'Settings'
-#   requirements:
-#     _permission: 'administer arlo'
-#   options:
-#     _admin_route: TRUE
+arlo.settings:
+  path: 'admin/structure/arlo/settings'
+  defaults:
+    _form: '\Drupal\arlo\Form\ArloSettingsForm'
+    _title: 'Settings'
+  requirements:
+    _permission: 'administer arlo'
+  options:
+    _admin_route: TRUE
+
+arlo.api:
+  path: 'api/arlo/json'
+  defaults:
+    _controller: '\Drupal\arlo\Controller\ArloAPIController::endpoint'
+    _title: 'Arlo Webhook Endpoint'
+  methods: [GET,POST]
+  requirements:
+    _permission: 'access content'

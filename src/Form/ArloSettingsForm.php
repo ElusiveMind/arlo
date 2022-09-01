@@ -40,7 +40,6 @@ class ArloSettingsForm extends ConfigFormBase {
   public function buildForm(array $form, FormStateInterface $form_state, $feed_machine_name = NULL) {
     $config = $this->config('arlo.settings');
 
-
     $form['arlo_platform_id'] = array(
       '#type' => 'textfield',
       '#title' => t('Platform ID'),

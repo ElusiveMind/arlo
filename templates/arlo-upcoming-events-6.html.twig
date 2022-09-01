@@ -6,11 +6,11 @@
     document.addEventListener("arlojscontrolsloaded", function() {
     var platformID = "{{ platform_id }}"
 
-    var eventList = {
+    var eventList6 = {
       moduleType: "UpcomingEvents",
       targetElement: "#upcoming-events",
       template: "#upcoming-events-template",
-      maxCount: {{ max_count }},
+      maxCount: "{{ max_count }}",
       includeLoadMoreButton: {{ show_load_more }},
       loadMoreButtonText: "{{ load_more_text }}",
       includeArloLink: false,
@@ -30,7 +30,7 @@
     app.start({
       platformID: platformID,
       showDevErrors: {{ dev_mode }},
-      modules: [eventList]
+      modules: [eventList6]
     });
 
     /* ----- Callback function ----- */
