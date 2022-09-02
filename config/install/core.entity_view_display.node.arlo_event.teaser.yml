@@ -1,0 +1,36 @@
+uuid: 32889dc7-9450-4b64-8466-75ba0d9240f2
+langcode: en
+status: false
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.arlo_event.body
+    - field.field.node.arlo_event.field_arlo_event_id
+    - field.field.node.arlo_event.field_arlo_link
+    - field.field.node.arlo_event.field_arlo_summary
+    - node.type.arlo_event
+  module:
+    - text
+    - user
+id: node.arlo_event.teaser
+targetEntityType: node
+bundle: arlo_event
+mode: teaser
+content:
+  body:
+    type: text_summary_or_trimmed
+    label: hidden
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_arlo_event_id: true
+  field_arlo_link: true
+  field_arlo_summary: true

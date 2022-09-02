@@ -1,0 +1,18 @@
+uuid: e82b1e6c-4c34-4856-a768-3c3b0bc3527a
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.arlo_event
+id: node.arlo_event.title
+field_name: title
+entity_type: node
+bundle: arlo_event
+label: Name
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

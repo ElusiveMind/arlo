@@ -1,0 +1,20 @@
+uuid: 5207e289-d7aa-4a91-a8d6-588b93320869
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - text
+id: node.field_arlo_summary
+field_name: field_arlo_summary
+entity_type: node
+type: text
+settings:
+  max_length: 255
+module: text
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

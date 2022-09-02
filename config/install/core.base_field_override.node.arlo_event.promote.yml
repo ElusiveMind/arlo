@@ -1,0 +1,22 @@
+uuid: 9a489d07-c199-4b62-b9a6-b04c1c8a1c16
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.arlo_event
+id: node.arlo_event.promote
+field_name: promote
+entity_type: node
+bundle: arlo_event
+label: 'Promoted to front page'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

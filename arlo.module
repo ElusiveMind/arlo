@@ -6,6 +6,9 @@
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Routing\TrustedRedirectResponse;
 
 /**
  * Implements hook_help().
@@ -19,6 +22,18 @@ function arlo_help($route_name, RouteMatchInterface $route_match) {
       break;
     default:
       break;
+  }
+}
+
+/**
+ * Implements hook_node_view().
+ */
+function arlo_node_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+  if ($entity->bundle() == 'arlo_event') {
+    $link = $entity->get('field_arlo_link')->getValue();
+    $uri = $link[0]['uri'];
+    $redirect = new TrustedRedirectResponse($uri);
+    $redirect->send();
   }
 }
 

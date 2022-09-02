@@ -43,7 +43,7 @@ class ArloSettingsForm extends ConfigFormBase {
     $form['arlo_platform_id'] = array(
       '#type' => 'textfield',
       '#title' => t('Platform ID'),
-      '#description' => t('The platform ID for your integration. This is usually the URL of your Arlo control panel.'),
+      '#description' => t('The platform ID for your integration. This is usually the domain name (xxx.arlo.co) of your Arlo control panel.'),
       '#default_value' => $config->get('platform_id'),
       '#required' => TRUE,
       '#weight' => 1,

@@ -1,0 +1,56 @@
+uuid: f59a46e5-9dbb-4bc8-aa04-6e1b79c8cba2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.arlo_event.body
+    - field.field.node.arlo_event.field_arlo_event_id
+    - field.field.node.arlo_event.field_arlo_link
+    - field.field.node.arlo_event.field_arlo_summary
+    - node.type.arlo_event
+  module:
+    - link
+    - text
+    - user
+id: node.arlo_event.default
+targetEntityType: node
+bundle: arlo_event
+mode: default
+content:
+  body:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_arlo_event_id:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_arlo_link:
+    type: link
+    label: above
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_arlo_summary:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
+hidden:
+  links: true

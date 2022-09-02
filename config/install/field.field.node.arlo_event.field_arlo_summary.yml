@@ -1,0 +1,21 @@
+uuid: 0c9844fc-dc27-4ea7-8661-413ad75883ef
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_arlo_summary
+    - node.type.arlo_event
+  module:
+    - text
+id: node.arlo_event.field_arlo_summary
+field_name: field_arlo_summary
+entity_type: node
+bundle: arlo_event
+label: 'Arlo Summary'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text
