@@ -20,8 +20,17 @@ steps:
     plugin: Script
     script: |
       cd /var/www/html
-      drush si -y --account-name=admin --account-mail=mrbagnall@icloud.com --site-mail=mrbagnall@icloud.com --account-pass=SailAway77
+      drush si -y --account-name=admin --account-mail=mrbagnall@icloud.com --site-mail=mrbagnall@icloud.com --account-pass=password12345
       drush pm:enable -y admin_toolbar
       chmod 755 /src/docroot/web/sites/default/settings.php
 
   - name: Install Arlo Module
+    plugin: Script
+    script: |
+      cd /src/docroot/web/modules
+      mkdir drupal
+      cd drupal
+      rsync -av --progress /src /src/docroot/web/modules/drupal --exclude docroot
+      cd /src/docroot
+      drush cr -y
+      drush pm:enable -y arlo
