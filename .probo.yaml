@@ -21,8 +21,8 @@ steps:
     drupalVersion: 9
     subDirectory: docroot/web
     settingsAppend: |
-      $config['arlo.settings']['platform_id'] = getenv('ARLO_URL');
-      $config['arlo.settings']['webhook_key'] = getenv('ARLO_KEY');
+      $config['arlo.settings']['platform_id'] = '$ARLO_URL';
+      $config['arlo.settings']['webhook_key'] = '$ARLO_KEY';
 
   - name: Run the Drupal 9 Site Installation - Ubuntu
     plugin: Script
