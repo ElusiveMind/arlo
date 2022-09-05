@@ -19,7 +19,7 @@ steps:
   - name: Run the Drupal 9 Site Installation - Ubuntu
     plugin: Script
     script: |
-      cd /var/www/html
+      cd /src/docroot
       drush si -y --account-name=admin --account-mail=mrbagnall@icloud.com --site-mail=mrbagnall@icloud.com --account-pass=password12345
       drush pm:enable -y admin_toolbar
       chmod 755 /src/docroot/web/sites/default/settings.php
