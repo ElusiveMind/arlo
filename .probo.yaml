@@ -1,6 +1,11 @@
 image: docker.flyingflip.com/probo/alpine:php8.1
+assets:
+  - .env
 
 steps:
+  - name: Load variables.
+    command: 'source $ASSET_DIR/.env'
+
   - name: Install Drupal 9 Files From Drupal
     plugin: Script
     script: |
@@ -11,11 +16,6 @@ steps:
       composer require drush/drush:^11 drupal/admin_toolbar
       chmod -R 777 /src/docroot/web/sites/default
 
-  - name: Set Up Configuration for Drupal 9
-    plugin: Drupal
-    drupalVersion: 9
-    subDirectory: docroot/web
-
   - name: Run the Drupal 9 Site Installation - Ubuntu
     plugin: Script
     script: |
@@ -23,6 +23,11 @@ steps:
       drush si -y --account-name=admin --account-mail=mrbagnall@icloud.com --site-mail=mrbagnall@icloud.com --account-pass=password12345
       drush pm:enable -y admin_toolbar
       chmod 755 /src/docroot/web/sites/default/settings.php
+
+  - name: Set Up Configuration for Drupal 9
+    plugin: Drupal
+    drupalVersion: 9
+    subDirectory: docroot/web
 
   - name: Install Arlo Module
     plugin: Script

@@ -20,46 +20,77 @@ class ArloAPIController extends ControllerBase {
    * webhook.
    */
   public function endpoint(Request $request) {
+    $config = $this->config('arlo.settings');
+    $webhook_key = $config->get('webhook_key');
+
     // Get the input from our posted data. If no data was posted, then we can
     // bail on the operation.
     $content = $request->getContent();
-    $data = json_decode($content, FALSE);
+    $headers = $_SERVER;
 
-    // What we get from the API is metadata only. For "Event" resource types, the
-    // resourceID is the event id. This needs to then be used to fetch the event
-    // information from Arlo and either create a new event or update an existing
-    // one as it exists in Drupal.
-    if (!empty($data)) {
-      // Handle event events.
-      if (!empty($data->events)) {
-        foreach ($data->events as $event) {
-          switch ($event->type) {
-            case 'Event.Created':
-              $fetchedEvent = $this->fetchEvent($event->resourceId);
-              if (!empty($fetchedEvent)) {
-                $this->createEvent($fetchEvent);
-              }
-              break;
-            case 'Event.Updated':
-              $fetchedEvent = $this->fetchEvent($event->resourceId);
-              if (!empty($fetchedEvent)) {
-                $this->updateEvents($fetchedEvent);
-              }
-              else {
-                // TODO: Not sure yet if we should delete the reference if there is no data
-                // or handle the error differently. Right now we will mark this issue
-                // as to be done.
-              }
-              break;
-            default:
-              break;
-          }
+    /**
+     * We need to figure out how to verify the signature of each incoming message
+     * as it relates to the webhook key for the webhook. We have an example of
+     * how it works here:
+     * 
+     * https://github.com/ArloSoftware/webhookclients/blob/master/python-flask/app.py
+     */
+    $auth = FALSE;
+    foreach ($headers as $header => $value) {
+      if (strtolower($header) == 'http_x_arlo_signature') {
+        $key_bytes = base64_decode($webhook_key);
+        $calculated = base64_encode(hash_hmac('sha512', $content, $key_bytes, TRUE));
+        if ($value == $calculated) {
+          $auth = TRUE;
         }
       }
-      $response = [
-        'data' => 'Success',
-        'method' => 'GET'
-      ];
+    }
+
+    if ($auth === TRUE) {
+      $data = json_decode($content, FALSE);
+
+      // What we get from the API is metadata only. For "Event" resource types, the
+      // resourceID is the event id. This needs to then be used to fetch the event
+      // information from Arlo and either create a new event or update an existing
+      // one as it exists in Drupal.
+      if (!empty($data)) {
+        // Handle event events.
+        if (!empty($data->events)) {
+          foreach ($data->events as $event) {
+            switch ($event->type) {
+              case 'Event.Created':
+                $fetchedEvent = $this->fetchEvent($event->resourceId);
+                if (!empty($fetchedEvent)) {
+                  $this->createEvent($fetchEvent);
+                }
+                break;
+              case 'Event.Updated':
+                $fetchedEvent = $this->fetchEvent($event->resourceId);
+                if (!empty($fetchedEvent)) {
+                  $this->updateEvents($fetchedEvent);
+                }
+                else {
+                  // TODO: Not sure yet if we should delete the reference if there is no data
+                  // or handle the error differently. Right now we will mark this issue
+                  // as to be done.
+                }
+                break;
+              default:
+                break;
+            }
+          }
+        }
+        $response = [
+          'data' => 'Success',
+          'method' => 'GET'
+        ];
+      }
+      else {
+        $response = [
+          'data' => 'Failure',
+          'method' => 'GET'
+        ];
+      }
     }
     else {
       $response = [
@@ -67,9 +98,6 @@ class ArloAPIController extends ControllerBase {
         'method' => 'GET'
       ];
     }
-
-    // I do not think this is necessary.
-    // header('Access-Control-Allow-Origin: *');
 
     return new JsonResponse($response);
   }
@@ -97,7 +125,7 @@ class ArloAPIController extends ControllerBase {
      */
     $config = $this->config('arlo.settings');
     $platform_id = $config->get('platform_id');
-    $filter = NULL; //(!empty($eventID)) ? '&filter=eventID=' . $eventID : NULL;
+    $filter = (!empty($eventID)) ? '&filter=eventID=' . $eventID : NULL;
     $url = 'https://' . $platform_id . '/api/2012-02-01/pub/resources/eventsearch?fields=eventid,name,description,summary,sessionsdescription,presenters,viewuri' . $filter;
     try {
       $request = \Drupal::httpClient()->get($url, [
@@ -149,6 +177,18 @@ class ArloAPIController extends ControllerBase {
       $status[$return]++;
     }
     return $status;
+  }
+
+  /**
+   * Synchronize events from Arlo into our Arlo Events content type.
+   *
+   * @return void
+   */
+  public function syncEvents() {
+    $events = $this->fetchEvent();
+    $this->updateEvents($events);
+    \Drupal::messenger()->addStatus('Arlo Events/Template have been synchronized.');
+    (new RedirectResponse('/admin'))->send();
   }
 
   /**

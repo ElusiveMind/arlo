@@ -19,6 +19,14 @@ arlo.settings:
   options:
     _admin_route: TRUE
 
+arlo.fetch:
+  path: 'admin/structure/arlo/fetch'
+  defaults:
+    _controller: '\Drupal\arlo\Controller\ArloAPIController::syncEvents'
+    _title: 'Sync Events'
+  requirements:
+    _permission: 'administer arlo'
+
 arlo.api:
   path: 'api/arlo/json'
   defaults:
@@ -27,3 +35,4 @@ arlo.api:
   methods: [GET,POST]
   requirements:
     _permission: 'access content'
+  
