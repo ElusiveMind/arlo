@@ -11,3 +11,10 @@ arlo.settings:
   description: "Configure Arlo Web Controls settings."
   parent: arlo.general
   weight: 0
+
+arlo.fetch:
+  title: "Sync Events"
+  route_name: arlo.fetch
+  description: "Synchronize all Arlo events/templates."
+  parent: arlo.general
+  weight: 10

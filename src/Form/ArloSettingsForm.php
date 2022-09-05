@@ -45,6 +45,16 @@ class ArloSettingsForm extends ConfigFormBase {
       '#title' => t('Platform ID'),
       '#description' => t('The platform ID for your integration. This is usually the domain name (xxx.arlo.co) of your Arlo control panel.'),
       '#default_value' => $config->get('platform_id'),
+      '#maxlength' => 255,
+      '#required' => TRUE,
+      '#weight' => 1,
+    );
+    $form['arlo_webhook_key'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Webhook Key'),
+      '#description' => t('The key assigned by Arlo when you set up the Webhook.'),
+      '#default_value' => $config->get('webhook_key'),
+      '#maxlength' => 255,
       '#required' => TRUE,
       '#weight' => 1,
     );
@@ -69,9 +79,7 @@ class ArloSettingsForm extends ConfigFormBase {
     $config = $this->config('arlo.settings');
     $this->config('arlo.settings')
       ->set('platform_id', $values['arlo_platform_id'])
+      ->set('webhook_key', $values['arlo_webhook_key'])
       ->save();
-
-    \Drupal::messenger()->addStatus('Arlo global settings have been successfully saved.');
-
   }
 }
